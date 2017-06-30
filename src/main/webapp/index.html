@@ -1,0 +1,103 @@
+<html ng-app="TreeApp">
+<head>
+<meta charset="UTF-8">
+<title>Tree</title>
+<script src="js/bower_components/angular/angular.min.js"></script>
+
+<script type="text/javascript"
+	src="js/bower_components/angular-tree-control/angular-tree-control.js"></script>
+<!-- link for CSS when using the tree as an attribute -->
+<link rel="stylesheet" type="text/css"
+	href="js/bower_components/angular-tree-control/css/tree-control-attribute.css">
+<link rel="stylesheet" href="js/bower_components/angular-material/angular-material.css">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<script src="js/bower_components/angular-aria/angular-aria.js"></script>
+<script src="js/bower_components/angular-animate/angular-animate.js"></script>
+<script src="js/bower_components/angular-material/angular-material.js"></script>
+
+<script src="js/tree.js"></script>
+
+<style type="text/css">
+	span.errorMsg {
+		font-size: 18px;
+		color: red;
+		font-weight: bold;
+	}
+</style>
+
+</head>
+<body ng-controller="TreeController" ng-cloak>
+
+<div>
+  <md-content class="md-padding" layout-xs="column" layout="row">
+    <div flex-xs flex-gt-xs="50" layout="column">
+      <md-card>
+        <md-card-title>
+          <md-card-title-text>
+            <span class="md-headline">Produtos</span>
+          </md-card-title-text>
+        </md-card-title>
+        <md-card-content>
+			
+			<p>
+			<md-button class="md-icon-button md-primary" ng-click="add($event)">
+        		<i class="material-icons">add</i>
+      		</md-button>
+			<md-button class="md-icon-button md-primary" ng-click="edit($event)">
+        		<i class="material-icons">mode_edit</i>
+      		</md-button>
+			<md-button class="md-icon-button md-primary" ng-click="remove($event)">
+        		<i class="material-icons">delete</i>
+      		</md-button>
+      		
+			<md-button class="md-icon-button md-primary right" ng-click="collapseAll()">
+        		<i class="material-icons">keyboard_arrow_up</i>
+      		</md-button>
+			<md-button class="md-icon-button md-primary right" ng-click="expandAll()">
+        		<i class="material-icons">keyboard_arrow_down</i>
+      		</md-button>
+      		</p>
+      		
+			<p>
+			<md-input-container md-no-float class="md-block">
+			  <i class="material-icons">search</i>		      
+		      <input style="width: 70%;" ng-model="predicate" type="text" placeholder="Digite para buscar">
+		    </md-input-container>
+			</p>
+			
+			<div treecontrol class="tree-light" tree-model="dataForTheTree"	options="treeOptions" on-selection="showSelected(node)"
+					filter-expression="predicate" selected-node="selected" expanded-nodes="expandedNodes"><span title="Cód: {{node.code}}, Desc: {{node.description}}, obs: {{node.observation}}">{{node.description}}</span></div>
+					
+        </md-card-content>
+      </md-card>
+	</div>
+  </md-content>
+</div>
+
+<div style="visibility: hidden">
+    <div class="md-dialog-container" id="myDialog">
+      <md-dialog layout-padding>
+        <md-card-title>
+          <md-card-title-text>
+            <span class="md-headline">{{formTitle}}</span>
+          </md-card-title-text>
+        <p>
+          <md-input-container md-no-float class="md-block">		      
+		      <input ng-model="formItem.code" type="text" placeholder="Código *">
+		  </md-input-container>
+          <md-input-container md-no-float class="md-block">		      
+		      <input ng-model="formItem.description" type="text" placeholder="Descrição *">
+		  </md-input-container>
+          <md-input-container md-no-float class="md-block">		      
+		      <input ng-model="formItem.observation" type="text" placeholder="Observação">
+		  </md-input-container>
+		  <span class="errorMsg">{{errorMsg}}</span>
+		  <md-button class="md-raised md-primary" ng-click="saveForm()">Salvar</md-button>
+		  
+        </p>
+      </md-dialog>
+    </div>
+  </div>
+
+</body>
+</html>
